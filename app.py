@@ -50,6 +50,12 @@ html, body, .stApp {
     color: #f7f7f8;
 }
 
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+#MainMenu {
+    display: none;
+}
+
 [data-testid="stSidebar"] {
     background: rgba(18, 18, 28, 0.96);
     border-right: 1px solid rgba(255,255,255,0.08);
@@ -185,6 +191,13 @@ h1, h2, h3 {
     overflow: hidden;
 }
 
+.lead-panel {
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
 .wow-kicker {
     color: #ffb199;
     font-size: 12px;
@@ -242,6 +255,13 @@ h1, h2, h3 {
     font-size: 18px;
     font-weight: 900;
     margin-top: 4px;
+}
+
+.asset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+    margin: 12px 0 14px;
 }
 
 .asset-card {
@@ -314,6 +334,7 @@ h1, h2, h3 {
 @media (max-width: 760px) {
     .hero-title { font-size: 36px; }
     .insight-strip { grid-template-columns: 1fr; }
+    .lead-panel { grid-template-columns: 1fr; }
 }
 </style>
 """,
@@ -643,143 +664,119 @@ if "giants" in st.session_state:
         top_rewrite_title = top_giant.get("title", "Optimized listing")[:110]
 
     st.header("Founder Demo Moment")
-    wow_left, wow_right = st.columns([1.05, 1.45])
-    with wow_left:
-        image = top_giant.get("image_url")
-        image_html = (
-            f'<img class="wow-image" src="{image}" alt="Top opportunity product">'
-            if image
-            else '<div class="wow-image"></div>'
-        )
-        st.markdown(
-            f"""
-<div class="wow-panel">
-  <div class="wow-kicker">Best seller lead found</div>
-  {image_html}
-  <div class="wow-title">{top_giant.get('title', '')[:116]}</div>
-  <div class="wow-subtitle">This is not just a weak listing. It is a seller lead with demand, proof, and a personalized pitch angle.</div>
-  <div class="insight-strip">
-    <div class="insight-pill">
-      <div class="insight-label">Lead score</div>
-      <div class="insight-value">{top_score}/100</div>
-    </div>
-    <div class="insight-pill">
-      <div class="insight-label">Revenue leak</div>
-      <div class="insight-value">Rs.{top_giant.get('money_left_on_table', 0):,}/mo</div>
-    </div>
-    <div class="insight-pill">
-      <div class="insight-label">Listing score</div>
-      <div class="insight-value">{top_giant.get('listing_score', 0)}/100</div>
+    image = top_giant.get("image_url")
+    image_html = (
+        f'<img class="wow-image" src="{html.escape(image, quote=True)}" alt="Top opportunity product">'
+        if image
+        else '<div class="wow-image"></div>'
+    )
+    top_title_html = html.escape(top_giant.get("title", "")[:140])
+    top_rewrite_title_html = html.escape(top_rewrite_title[:90])
+    rewrite_lines = top_rewrite_bullets[:2] if top_rewrite_bullets else [top_rewrite_title]
+    bullets_html = "<br>".join(html.escape(line) for line in rewrite_lines)
+    weakness = top_giant.get("weaknesses", ["Listing needs clearer benefits"])[0]
+    weakness_html = html.escape(weakness)
+
+    st.markdown(
+        f"""
+<div class="wow-panel lead-panel">
+  <div>{image_html}</div>
+  <div>
+    <div class="wow-kicker">Best seller lead found</div>
+    <div class="wow-title">{top_title_html}</div>
+    <div class="wow-subtitle">This is not just a weak listing. It is a seller lead with demand, proof, and a personalized pitch angle.</div>
+    <div class="insight-strip">
+      <div class="insight-pill">
+        <div class="insight-label">Lead score</div>
+        <div class="insight-value">{top_score}/100</div>
+      </div>
+      <div class="insight-pill">
+        <div class="insight-label">Revenue leak</div>
+        <div class="insight-value">Rs.{top_giant.get('money_left_on_table', 0):,}/mo</div>
+      </div>
+      <div class="insight-pill">
+        <div class="insight-label">Listing score</div>
+        <div class="insight-value">{top_giant.get('listing_score', 0)}/100</div>
+      </div>
     </div>
   </div>
 </div>
-""",
-            unsafe_allow_html=True,
-        )
-
-    with wow_right:
-        st.markdown(
-            f"""
-<div class="wow-panel">
-  <div class="wow-kicker">Client acquisition kit generated</div>
-  <div class="wow-title">From Amazon search to sales pitch in one scan.</div>
-  <div class="wow-subtitle">The product has estimated revenue, visible listing weaknesses, a rewritten offer, a cold email angle, and downloadable client collateral.</div>
+<div class="asset-grid">
+  <div class="asset-card">
+    <div class="asset-card-title">1. Audit Hook</div>
+    <div class="asset-card-copy">{weakness_html}</div>
+  </div>
+  <div class="asset-card">
+    <div class="asset-card-title">2. Rewrite Preview</div>
+    <div class="asset-card-copy"><strong>{top_rewrite_title_html}</strong><br>{bullets_html}</div>
+  </div>
+  <div class="asset-card">
+    <div class="asset-card-title">3. Outreach Angle</div>
+    <div class="asset-card-copy">Tell the seller they may be leaving <strong>Rs.{top_giant.get('money_left_on_table', 0):,}/month</strong> on the table and offer the rewritten listing as proof.</div>
+  </div>
 </div>
 """,
-            unsafe_allow_html=True,
-        )
+        unsafe_allow_html=True,
+    )
 
-        kit_cols = st.columns(3)
-        with kit_cols[0]:
-            st.markdown(
-                f"""
-<div class="asset-card">
-  <div class="asset-card-title">1. Audit Hook</div>
-  <div class="asset-card-copy">{top_giant.get('weaknesses', ['Listing needs clearer benefits'])[0]}</div>
-</div>
-""",
-                unsafe_allow_html=True,
+    action_cols = st.columns(3)
+    with action_cols[0]:
+        if st.button("Generate Top Email", key="wow_email"):
+            st.session_state["wow_email_text"] = generate_cold_email(top_giant)
+        if st.session_state.get("wow_email_text"):
+            st.download_button(
+                "Download Email",
+                st.session_state["wow_email_text"],
+                file_name=f"top_lead_email_{top_giant.get('asin', 'product')}.txt",
+                key="wow_email_download",
             )
-        with kit_cols[1]:
-            bullets_html = "<br>".join(top_rewrite_bullets[:2]) if top_rewrite_bullets else top_rewrite_title
-            st.markdown(
-                f"""
-<div class="asset-card">
-  <div class="asset-card-title">2. Rewrite Preview</div>
-  <div class="asset-card-copy"><strong>{top_rewrite_title[:90]}</strong><br>{bullets_html}</div>
-</div>
-""",
-                unsafe_allow_html=True,
+    with action_cols[1]:
+        if st.button("Generate Top Deck", key="wow_deck", type="primary"):
+            pptx_bytes, slide_content = generate_pitch_deck(top_giant)
+            if pptx_bytes:
+                st.session_state["wow_deck"] = pptx_bytes
+        if st.session_state.get("wow_deck"):
+            st.download_button(
+                "Download Deck",
+                st.session_state["wow_deck"],
+                file_name=f"founder_demo_deck_{_safe_filename(top_giant.get('title', 'product')[:30])}.pptx",
+                mime="application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                key="wow_deck_download",
             )
-        with kit_cols[2]:
-            st.markdown(
-                f"""
-<div class="asset-card">
-  <div class="asset-card-title">3. Outreach Angle</div>
-  <div class="asset-card-copy">Tell the seller they may be leaving <strong>Rs.{top_giant.get('money_left_on_table', 0):,}/month</strong> on the table and offer the rewritten listing as proof.</div>
-</div>
-""",
-                unsafe_allow_html=True,
-            )
+    with action_cols[2]:
+        st.link_button("Open Amazon Lead", top_giant.get("url", f"https://www.amazon.in/dp/{top_giant.get('asin', '')}"))
 
-        action_cols = st.columns(3)
-        with action_cols[0]:
-            if st.button("Generate Top Email", key="wow_email"):
-                st.session_state["wow_email_text"] = generate_cold_email(top_giant)
-            if st.session_state.get("wow_email_text"):
-                st.download_button(
-                    "Download Email",
-                    st.session_state["wow_email_text"],
-                    file_name=f"top_lead_email_{top_giant.get('asin', 'product')}.txt",
-                    key="wow_email_download",
-                )
-        with action_cols[1]:
-            if st.button("Generate Top Deck", key="wow_deck", type="primary"):
-                pptx_bytes, slide_content = generate_pitch_deck(top_giant)
-                if pptx_bytes:
-                    st.session_state["wow_deck"] = pptx_bytes
-            if st.session_state.get("wow_deck"):
-                st.download_button(
-                    "Download Deck",
-                    st.session_state["wow_deck"],
-                    file_name=f"founder_demo_deck_{_safe_filename(top_giant.get('title', 'product')[:30])}.pptx",
-                    mime="application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                    key="wow_deck_download",
-                )
-        with action_cols[2]:
-            st.link_button("Open Amazon Lead", top_giant.get("url", f"https://www.amazon.in/dp/{top_giant.get('asin', '')}"))
-
-        bridge = go.Figure(
-            go.Waterfall(
-                orientation="v",
-                measure=["absolute", "relative", "total"],
-                x=["Current Revenue", "Monthly Leak", "Optimized Potential"],
-                y=[
-                    top_giant.get("estimated_revenue", 0),
-                    top_giant.get("money_left_on_table", 0),
-                    top_giant.get("optimized_revenue", 0),
-                ],
-                text=[
-                    f"Rs.{top_giant.get('estimated_revenue', 0):,}",
-                    f"+Rs.{top_giant.get('money_left_on_table', 0):,}",
-                    f"Rs.{top_giant.get('optimized_revenue', 0):,}",
-                ],
-                textposition="outside",
-                connector={"line": {"color": "rgba(255,255,255,0.35)"}},
-                increasing={"marker": {"color": "#28a745"}},
-                totals={"marker": {"color": "#ff4500"}},
-            )
+    bridge = go.Figure(
+        go.Waterfall(
+            orientation="v",
+            measure=["absolute", "relative", "total"],
+            x=["Current Revenue", "Monthly Leak", "Optimized Potential"],
+            y=[
+                top_giant.get("estimated_revenue", 0),
+                top_giant.get("money_left_on_table", 0),
+                top_giant.get("optimized_revenue", 0),
+            ],
+            text=[
+                f"Rs.{top_giant.get('estimated_revenue', 0):,}",
+                f"+Rs.{top_giant.get('money_left_on_table', 0):,}",
+                f"Rs.{top_giant.get('optimized_revenue', 0):,}",
+            ],
+            textposition="outside",
+            connector={"line": {"color": "rgba(255,255,255,0.35)"}},
+            increasing={"marker": {"color": "#28a745"}},
+            totals={"marker": {"color": "#ff4500"}},
         )
-        bridge.update_layout(
-            title="The Money Story",
-            height=300,
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            font={"color": "#f7f7f8"},
-            margin=dict(t=45, l=10, r=10, b=10),
-            yaxis=dict(gridcolor="rgba(255,255,255,0.08)"),
-        )
-        st.plotly_chart(bridge, use_container_width=True)
+    )
+    bridge.update_layout(
+        title="The Money Story",
+        height=360,
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font={"color": "#f7f7f8"},
+        margin=dict(t=85, l=20, r=20, b=35),
+        yaxis=dict(gridcolor="rgba(255,255,255,0.08)"),
+    )
+    st.plotly_chart(bridge, use_container_width=True)
 
     st.divider()
     st.header("Opportunity Gallery")
