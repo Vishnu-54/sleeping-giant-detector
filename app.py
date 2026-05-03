@@ -61,6 +61,21 @@ html, body, [class*="css"] {
     }
 }
 
+@keyframes floatPanel {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes scanBar {
+    0% { transform: translateX(-105%); }
+    100% { transform: translateX(105%); }
+}
+
+@keyframes breatheDot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(87, 213, 111, 0.42); }
+    50% { box-shadow: 0 0 0 8px rgba(87, 213, 111, 0); }
+}
+
 html, body, .stApp {
     max-width: 100%;
     overflow-x: hidden;
@@ -115,6 +130,17 @@ h1, h2, h3 {
     animation: softReveal 620ms ease-out both, pulseGlow 5.5s ease-in-out infinite;
 }
 
+.hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    gap: 24px;
+    align-items: center;
+}
+
+.hero-copy {
+    min-width: 0;
+}
+
 .hero-shell::before {
     content: "";
     position: absolute;
@@ -159,6 +185,142 @@ h1, h2, h3 {
     max-width: 820px;
 }
 
+.hero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.hero-chip {
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    color: #f4f5f8;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 8px 11px;
+    backdrop-filter: blur(12px);
+}
+
+.hero-chip.live {
+    color: #dfffe6;
+    border-color: rgba(87, 213, 111, 0.35);
+}
+
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #57d56f;
+    margin-right: 7px;
+    animation: breatheDot 1.9s ease-in-out infinite;
+}
+
+.hero-console {
+    position: relative;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.13);
+    background:
+        linear-gradient(160deg, rgba(255,255,255,0.12), rgba(255,255,255,0.035)),
+        rgba(8, 10, 16, 0.68);
+    padding: 18px;
+    box-shadow: 0 26px 72px rgba(0,0,0,0.34);
+    animation: floatPanel 6s ease-in-out infinite;
+    overflow: hidden;
+}
+
+.hero-console::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 42%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);
+    animation: scanBar 4.8s ease-in-out infinite;
+}
+
+.console-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.console-title {
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 14px;
+}
+
+.console-badge {
+    color: #dfffe6;
+    border: 1px solid rgba(87,213,111,0.28);
+    background: rgba(40,167,69,0.12);
+    border-radius: 999px;
+    padding: 5px 9px;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.signal-list {
+    display: grid;
+    gap: 10px;
+}
+
+.signal-row {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr) 42px;
+    gap: 10px;
+    align-items: center;
+    color: #cfd3de;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.signal-track {
+    height: 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.09);
+    overflow: hidden;
+}
+
+.signal-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #ff4d55, #ffb199, #57d56f);
+    box-shadow: 0 0 18px rgba(255, 69, 0, 0.22);
+}
+
+.console-footer {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.console-stat {
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.055);
+    padding: 10px;
+}
+
+.console-stat strong {
+    display: block;
+    color: #ffffff;
+    font-size: 17px;
+}
+
+.console-stat span {
+    color: #aeb4c2;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
 .product-card {
     min-height: 250px;
     padding: 16px;
@@ -170,6 +332,8 @@ h1, h2, h3 {
     box-shadow: 0 18px 40px rgba(0,0,0,0.18);
     transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
     animation: softReveal 520ms ease-out both;
+    position: relative;
+    overflow: hidden;
 }
 
 .product-card:hover {
@@ -204,6 +368,96 @@ h1, h2, h3 {
     color: #cfd2dc;
     font-size: 12px;
     margin-top: 8px;
+}
+
+.rank-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.20);
+    background: rgba(16, 16, 24, 0.84);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 900;
+    padding: 6px 10px;
+    backdrop-filter: blur(12px);
+}
+
+.score-meter {
+    height: 7px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.10);
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.score-meter-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #57d56f, #ffb199, #ff4d55);
+}
+
+.section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.065);
+    color: #ffb199;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 6px 0 4px;
+}
+
+.section-tag::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff4d55;
+    box-shadow: 0 0 16px rgba(255, 69, 0, 0.45);
+}
+
+.scan-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+    margin: 4px 0 18px;
+}
+
+.scan-step {
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background:
+        linear-gradient(140deg, rgba(255,255,255,0.085), rgba(255,255,255,0.035)),
+        rgba(255,255,255,0.045);
+    padding: 13px 14px;
+    transition: transform 170ms ease, border-color 170ms ease, background 170ms ease;
+}
+
+.scan-step:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 177, 153, 0.28);
+    background:
+        linear-gradient(140deg, rgba(255,69,0,0.12), rgba(255,255,255,0.04)),
+        rgba(255,255,255,0.055);
+}
+
+.scan-step strong {
+    display: block;
+    color: #ffffff;
+    font-size: 13px;
+}
+
+.scan-step span {
+    display: block;
+    color: #aeb4c2;
+    font-size: 12px;
+    margin-top: 4px;
 }
 
 .stMetric {
@@ -493,6 +747,8 @@ h1, h2, h3 {
 
 @media (max-width: 760px) {
     .hero-title { font-size: 36px; }
+    .hero-layout { grid-template-columns: 1fr; }
+    .console-footer { grid-template-columns: 1fr; }
     .insight-strip { grid-template-columns: 1fr; }
     .lead-panel { grid-template-columns: 1fr; }
 }
@@ -514,9 +770,46 @@ h1, h2, h3 {
 st.markdown(
     """
 <div class="hero-shell">
-  <div class="hero-kicker">Amazon opportunity intelligence</div>
-  <div class="hero-title">Sleeping Giant Detector</div>
-  <div class="hero-subtitle">Find products with proven demand, weak listings, and ready-to-pitch revenue upside. Scan, score, rewrite, email, deck, and report in one workflow.</div>
+  <div class="hero-layout">
+    <div class="hero-copy">
+      <div class="hero-kicker">Amazon opportunity intelligence</div>
+      <div class="hero-title">Sleeping Giant Detector</div>
+      <div class="hero-subtitle">Find products with proven demand, weak listings, and ready-to-pitch revenue upside. Scan, score, rewrite, email, deck, and report in one workflow.</div>
+      <div class="hero-chips">
+        <div class="hero-chip live"><span class="status-dot"></span>Live listing scan</div>
+        <div class="hero-chip">Revenue gap finder</div>
+        <div class="hero-chip">Pitch assets ready</div>
+      </div>
+    </div>
+    <div class="hero-console">
+      <div class="console-top">
+        <div class="console-title">Lead Intelligence Engine</div>
+        <div class="console-badge">ACTIVE</div>
+      </div>
+      <div class="signal-list">
+        <div class="signal-row">
+          <span>Demand</span>
+          <div class="signal-track"><div class="signal-fill" style="width: 88%;"></div></div>
+          <span>88%</span>
+        </div>
+        <div class="signal-row">
+          <span>Weakness</span>
+          <div class="signal-track"><div class="signal-fill" style="width: 72%;"></div></div>
+          <span>72%</span>
+        </div>
+        <div class="signal-row">
+          <span>Pitch Fit</span>
+          <div class="signal-track"><div class="signal-fill" style="width: 94%;"></div></div>
+          <span>94%</span>
+        </div>
+      </div>
+      <div class="console-footer">
+        <div class="console-stat"><strong>5 min</strong><span>to pitch</span></div>
+        <div class="console-stat"><strong>AI</strong><span>rewrite</span></div>
+        <div class="console-stat"><strong>PDF</strong><span>report</span></div>
+      </div>
+    </div>
+  </div>
 </div>
 """,
     unsafe_allow_html=True,
@@ -571,6 +864,18 @@ with st.sidebar:
 
     st.divider()
     st.caption("Powered by ScraperAPI + Claude AI")
+
+
+st.markdown(
+    """
+<div class="scan-strip">
+  <div class="scan-step"><strong>1. Scan market</strong><span>Pull live Amazon search signals.</span></div>
+  <div class="scan-step"><strong>2. Detect weak pages</strong><span>Find listings with fixable conversion gaps.</span></div>
+  <div class="scan-step"><strong>3. Build pitch</strong><span>Generate rewrite, email, deck, and report.</span></div>
+</div>
+""",
+    unsafe_allow_html=True,
+)
 
 
 col_input, col_btn = st.columns([4, 1])
@@ -832,6 +1137,7 @@ if "giants" in st.session_state:
     if not top_rewrite_title:
         top_rewrite_title = top_giant.get("title", "Optimized listing")[:110]
 
+    st.markdown('<div class="section-tag">Founder Demo Moment</div>', unsafe_allow_html=True)
     st.header("Founder Demo Moment")
     image = top_giant.get("image_url")
     image_html = (
@@ -948,21 +1254,27 @@ if "giants" in st.session_state:
     st.plotly_chart(bridge, use_container_width=True)
 
     st.divider()
+    st.markdown('<div class="section-tag">Opportunity Gallery</div>', unsafe_allow_html=True)
     st.header("Opportunity Gallery")
     gallery_cols = st.columns(min(3, len(giants)))
     for idx, giant in enumerate(giants[:3]):
         with gallery_cols[idx % len(gallery_cols)]:
             image = giant.get("image_url")
+            image_src = html.escape(image, quote=True) if image else ""
+            title_html = html.escape(giant.get("title", "")[:86])
+            score_value = max(0, min(100, int(giant.get("listing_score", 0))))
             image_html = (
-                f'<img src="{image}" alt="Product image">'
+                f'<img src="{image_src}" alt="Product image">'
                 if image
                 else '<div style="height:120px;background:#fff;border-radius:8px;"></div>'
             )
             st.markdown(
                 f"""
 <div class="product-card">
+  <div class="rank-badge">#{idx + 1} Lead</div>
   {image_html}
-  <div class="product-name">#{idx + 1} {giant.get('title', '')[:86]}</div>
+  <div class="product-name">{title_html}</div>
+  <div class="score-meter"><div class="score-meter-fill" style="width: {100 - score_value}%;"></div></div>
   <div class="product-meta">₹{giant.get('estimated_revenue', 0):,}/mo · Score {giant.get('listing_score', 0)}/100 · {giant.get('review_count', 0):,} reviews</div>
 </div>
 """,
@@ -970,6 +1282,7 @@ if "giants" in st.session_state:
             )
 
     st.divider()
+    st.markdown('<div class="section-tag">Ranked Opportunities</div>', unsafe_allow_html=True)
     st.header("Ranked Sleeping Giants")
 
     table_data = []
@@ -991,6 +1304,7 @@ if "giants" in st.session_state:
     df = pd.DataFrame(table_data)
     st.dataframe(df, use_container_width=True, hide_index=True)
 
+    st.markdown('<div class="section-tag">Deep Dive</div>', unsafe_allow_html=True)
     st.header("Deep Dive Analysis")
 
     for i, giant in enumerate(giants[:5]):
