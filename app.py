@@ -173,6 +173,7 @@ h1, h2, h3 {
     box-shadow: 0 24px 80px rgba(0,0,0,0.34);
     padding: 22px;
     margin: 8px 0 22px;
+    overflow: hidden;
 }
 
 .wow-kicker {
@@ -184,10 +185,11 @@ h1, h2, h3 {
 
 .wow-title {
     color: #ffffff;
-    font-size: 30px;
+    font-size: 24px;
     line-height: 1.12;
     font-weight: 900;
     margin: 6px 0 10px;
+    overflow-wrap: anywhere;
 }
 
 .wow-subtitle {
@@ -198,7 +200,7 @@ h1, h2, h3 {
 
 .wow-image {
     width: 100%;
-    height: 210px;
+    height: 180px;
     object-fit: contain;
     background: #ffffff;
     border-radius: 8px;
@@ -234,7 +236,7 @@ h1, h2, h3 {
 }
 
 .asset-card {
-    min-height: 176px;
+    min-height: 132px;
     border-radius: 8px;
     border: 1px solid rgba(255,255,255,0.12);
     background: rgba(255,255,255,0.07);
@@ -252,6 +254,42 @@ h1, h2, h3 {
     color: #cfd3de;
     font-size: 13px;
     line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.clean-diff-card {
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.065);
+    padding: 16px;
+    min-height: 260px;
+}
+
+.clean-diff-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.clean-diff-list {
+    margin: 0;
+    padding-left: 18px;
+    color: #d8dbe5;
+    line-height: 1.55;
+    font-size: 14px;
+}
+
+.clean-diff-list li {
+    margin-bottom: 10px;
+}
+
+.before-card {
+    border-left: 4px solid #dc3545;
+}
+
+.after-card {
+    border-left: 4px solid #28a745;
 }
 
 @media (max-width: 760px) {
