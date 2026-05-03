@@ -1,4 +1,4 @@
-# Sleeping Giant Detector
+# 🔥 Sleeping Giant Detector
 
 **Find Amazon products that already sell, but are losing money because the listing is weak.**
 
@@ -8,7 +8,7 @@ Type a product category like `posture corrector`, `air purifier`, or `laptop sta
 
 ---
 
-## The Big Idea
+## 💡 The Big Idea
 
 Most Amazon tools show data.
 
@@ -22,7 +22,7 @@ That is the founder-level insight: this is not just an analytics dashboard. It i
 
 ---
 
-## Who Is This For?
+## 👥 Who Is This For?
 
 - Amazon marketing agencies
 - Freelance Amazon listing copywriters
@@ -33,7 +33,7 @@ That is the founder-level insight: this is not just an analytics dashboard. It i
 
 ---
 
-## Problem
+## 😩 Problem
 
 Agencies and freelancers waste hours finding good leads manually:
 
@@ -49,7 +49,7 @@ This can take **3-4 hours per qualified lead**.
 
 ---
 
-## Solution
+## 🚀 Solution
 
 Sleeping Giant Detector compresses that workflow into minutes:
 
@@ -68,7 +68,7 @@ The user goes from **search keyword** to **client-ready pitch assets** in one wo
 
 ---
 
-## What Is A Sleeping Giant?
+## 🛌 What Is A Sleeping Giant?
 
 A Sleeping Giant is a product with:
 
@@ -97,7 +97,7 @@ That number becomes the pitch.
 
 ---
 
-## Founder Demo Moment
+## ⚡ Founder Wow Moment
 
 The app includes a dedicated **Founder Demo Moment** panel.
 
@@ -120,9 +120,9 @@ This makes the value obvious in the first few seconds after a scan.
 
 ---
 
-## Key Features
+## ✨ Key Features
 
-### 1. Amazon Category Scanner
+### 🔍 1. Amazon Category Scanner
 
 Enter any Amazon product category and scan live search results through ScraperAPI.
 
@@ -136,7 +136,7 @@ resistance bands
 magnesium supplement
 ```
 
-### 2. Ranked Opportunity Table
+### 📊 2. Ranked Opportunity Table
 
 Products are ranked by opportunity using:
 
@@ -146,7 +146,7 @@ Products are ranked by opportunity using:
 - Reviews
 - Sponsored/organic status
 
-### 3. Listing Quality Score
+### 🧠 3. Listing Quality Score
 
 Each listing is scored across 5 dimensions:
 
@@ -158,7 +158,7 @@ Each listing is scored across 5 dimensions:
 | Visuals | Image count and A+ content signals |
 | Social Proof | Reviews and trust signals used in copy |
 
-### 4. Revenue Estimator
+### 💰 4. Revenue Estimator
 
 The app estimates monthly revenue using:
 
@@ -168,7 +168,7 @@ The app estimates monthly revenue using:
 
 It also calculates estimated revenue left on the table.
 
-### 5. AI Rewrite
+### ✍️ 5. AI Rewrite
 
 Generates:
 
@@ -177,11 +177,11 @@ Generates:
 - Improved description
 - Conversion uplift note
 
-### 6. Visual Before/After Diff
+### 🔁 6. Visual Before/After Diff
 
 Shows what changed between the original listing and optimized version.
 
-### 7. Cold Email Generator
+### 📧 7. Cold Email Generator
 
 Creates a personalized seller outreach email using:
 
@@ -191,7 +191,7 @@ Creates a personalized seller outreach email using:
 - Main weakness
 - Revenue gap
 
-### 8. Auto Client Pitch Deck
+### 🎯 8. Auto Client Pitch Deck
 
 Generates a downloadable 5-slide `.pptx` deck:
 
@@ -201,7 +201,7 @@ Generates a downloadable 5-slide `.pptx` deck:
 4. Optimized Listing Preview
 5. Why Work With Us
 
-### 9. PDF Report Export
+### 📄 9. PDF Report Export
 
 Exports all Sleeping Giants into a client-ready PDF report with:
 
@@ -215,20 +215,20 @@ Exports all Sleeping Giants into a client-ready PDF report with:
 
 ---
 
-## Business Value
+## 💸 Business Value
 
-### User Alternative
+### 🧾 User Alternative
 
 Manual research with Amazon search, spreadsheets, and copywriting.
 
-### Time Saved
+### ⏱️ Time Saved
 
 ```text
 Manual process: 3-4 hours per lead
 With this tool: minutes
 ```
 
-### How Users Make Money
+### 🤑 How Users Make Money
 
 Agencies and freelancers can use the generated audit, email, and deck to pitch Amazon sellers.
 
@@ -239,7 +239,7 @@ Example service offers:
 - Monthly Amazon optimization retainer: Rs.25,000-1,00,000+
 - Agency SaaS lead tool: $49-99/month
 
-### Potential Revenue Model
+### 📈 Potential Revenue Model
 
 ```text
 SaaS plan: $49/month
@@ -257,9 +257,9 @@ Rs.999/month for unlimited scans
 
 ---
 
-## Why This Beats Existing Tools
+## 🏆 Why This Beats Existing Tools
 
-### vs Helium10 / Jungle Scout
+### 🧰 vs Helium10 / Jungle Scout
 
 Those tools show product data.
 
@@ -271,25 +271,25 @@ Sleeping Giant Detector shows:
 - What email to send
 - What deck to pitch
 
-### vs Hiring A VA
+### 👩‍💻 vs Hiring A VA
 
 A VA may take days to research and prepare leads.
 
 This app does it in minutes.
 
-### vs Manual Research
+### 🐢 vs Manual Research
 
 Manual research gives you a spreadsheet.
 
 This app gives you a client-ready sales package.
 
-### Unique Angle
+### ⭐ Unique Angle
 
 The cold email and pitch deck generation turns analytics into immediate ROI.
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 | Layer | Tool |
 |---|---|
@@ -306,7 +306,7 @@ The cold email and pitch deck generation turns analytics into immediate ROI.
 
 ---
 
-## Why Local AI Fallback?
+## 🧯 Why Local AI Fallback?
 
 Free AI APIs often have strict rate limits.
 
@@ -330,7 +330,7 @@ The system is structured so a production version can swap in Gemini, Groq, OpenR
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
 sleeping-giant-detector/
@@ -352,22 +352,22 @@ sleeping-giant-detector/
 
 ---
 
-## Local Setup
+## ⚙️ Local Setup
 
-### 1. Clone Repository
+### 1️⃣ Clone Repository
 
 ```bash
 git clone https://github.com/Vishnu-54/sleeping-giant-detector.git
 cd sleeping-giant-detector
 ```
 
-### 2. Install Dependencies
+### 2️⃣ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Create Environment File
+### 3️⃣ Create Environment File
 
 Copy:
 
@@ -383,7 +383,7 @@ LLM_PROVIDER=local
 GEMINI_MODEL=gemini-2.5-flash
 ```
 
-### 4. Run App
+### 4️⃣ Run App
 
 ```bash
 streamlit run app.py
@@ -397,7 +397,7 @@ http://localhost:8501
 
 ---
 
-## Streamlit Cloud Deployment
+## ☁️ Streamlit Cloud Deployment
 
 Deploy using Streamlit Community Cloud:
 
@@ -423,50 +423,7 @@ GEMINI_MODEL = "gemini-2.5-flash"
 
 ---
 
-## Demo Script
-
-Use this for a 3-minute submission video.
-
-### 0:00-0:30
-
-Introduce yourself, school, CGPA, and favorite accomplishment.
-
-### 0:30-1:15
-
-Explain the pain:
-
-> Amazon agencies waste hours finding sellers with weak listings. This tool finds those leads instantly.
-
-### 1:15-2:15
-
-Live demo:
-
-1. Type `posture corrector`
-2. Show loading progress
-3. Show Founder Demo Moment
-4. Show revenue leak
-5. Open deep dive
-6. Show rewrite and before/after diff
-7. Generate cold email
-8. Download pitch deck
-
-### 2:15-3:00
-
-Explain business model:
-
-> Agencies could pay $49-99/month because this saves hours and gives them client-ready pitch assets.
-
-Mention future upgrades:
-
-- Seller contact finder
-- Auto email outreach
-- Shopify/Walmart support
-- Trend correlation
-- CRM integration
-
----
-
-## Best Demo Settings
+## 🎬 Best Demo Settings
 
 Use:
 
@@ -480,7 +437,7 @@ Include sponsored listings: ON
 
 ---
 
-## Important Security Note
+## 🔐 Important Security Note
 
 Never commit `.env`.
 
@@ -488,6 +445,6 @@ Rotate API keys if they were exposed during testing or screenshots.
 
 ---
 
-## One-Line Pitch
+## 🗣️ One-Line Pitch
 
 **Sleeping Giant Detector helps Amazon agencies find warm seller leads and generate a personalized audit, email, pitch deck, and PDF report in minutes.**
