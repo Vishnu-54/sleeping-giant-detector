@@ -1,12 +1,11 @@
 # app.py - Main Streamlit Application
 
-import difflib
+import html
 import time
 
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
-import streamlit.components.v1 as components
 
 from pdf_generator import generate_pdf
 from pitch_deck import generate_pitch_deck
@@ -31,6 +30,16 @@ st.markdown(
 
 html, body, [class*="css"] {
     font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+html, body, .stApp {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.block-container {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .stApp {
@@ -262,7 +271,8 @@ h1, h2, h3 {
     border: 1px solid rgba(255,255,255,0.12);
     background: rgba(255,255,255,0.065);
     padding: 16px;
-    min-height: 260px;
+    min-height: 240px;
+    overflow: hidden;
 }
 
 .clean-diff-title {
@@ -278,6 +288,7 @@ h1, h2, h3 {
     color: #d8dbe5;
     line-height: 1.55;
     font-size: 14px;
+    overflow-wrap: anywhere;
 }
 
 .clean-diff-list li {
@@ -290,6 +301,14 @@ h1, h2, h3 {
 
 .after-card {
     border-left: 4px solid #28a745;
+}
+
+.before-card .clean-diff-list li::marker {
+    color: #ff8b8b;
+}
+
+.after-card .clean-diff-list li::marker {
+    color: #57d56f;
 }
 
 @media (max-width: 760px) {
@@ -432,6 +451,30 @@ def _extract_rewrite_preview(rewrite):
         }:
             bullets.append(line)
     return title, bullets[:3]
+
+
+def _extract_rewrite_bullets(rewrite, limit=5):
+    text = str(rewrite or "")
+    if "BULLETS:" in text:
+        text = text.split("BULLETS:", 1)[1]
+    if "DESCRIPTION:" in text:
+        text = text.split("DESCRIPTION:", 1)[0]
+
+    bullets = []
+    for line in text.splitlines():
+        cleaned = line.strip().lstrip("-•* ").strip()
+        if not cleaned:
+            continue
+        if cleaned.upper() in {"TITLE:", "BULLETS:", "DESCRIPTION:", "UPLIFT NOTE:"}:
+            continue
+        bullets.append(cleaned)
+    return bullets[:limit]
+
+
+def _list_html(items):
+    if not items:
+        return "<li>No content found.</li>"
+    return "".join(f"<li>{html.escape(str(item))}</li>" for item in items)
 
 
 if search_clicked and keyword:
@@ -890,33 +933,34 @@ if "giants" in st.session_state:
             if giant.get("bullets") and giant.get("rewrite"):
                 st.subheader("What Changed")
 
-                original_text = "\n".join(giant.get("bullets", []))
-                rewrite_text = giant.get("rewrite", "")
-                if "BULLETS:" in rewrite_text:
-                    rewrite_text = rewrite_text.split("BULLETS:", 1)[1]
-                    if "DESCRIPTION:" in rewrite_text:
-                        rewrite_text = rewrite_text.split("DESCRIPTION:", 1)[0]
+                original_bullets = giant.get("bullets", [])[:5]
+                optimized_bullets = _extract_rewrite_bullets(giant.get("rewrite", ""), limit=5)
 
-                diff = difflib.HtmlDiff(wrapcolumn=60)
-                diff_html = diff.make_table(
-                    original_text.splitlines(),
-                    rewrite_text.splitlines(),
-                    fromdesc="Original Bullets",
-                    todesc="Optimized Bullets",
-                    context=True,
+                diff_before, diff_after = st.columns(2)
+                with diff_before:
+                    st.markdown(
+                        f"""
+<div class="clean-diff-card before-card">
+  <div class="clean-diff-title">Original Bullets</div>
+  <ol class="clean-diff-list">{_list_html(original_bullets)}</ol>
+</div>
+""",
+                        unsafe_allow_html=True,
+                    )
+                with diff_after:
+                    st.markdown(
+                        f"""
+<div class="clean-diff-card after-card">
+  <div class="clean-diff-title">Optimized Bullets</div>
+  <ol class="clean-diff-list">{_list_html(optimized_bullets)}</ol>
+</div>
+""",
+                        unsafe_allow_html=True,
+                    )
+
+                st.caption(
+                    "Original copy is shown beside the rewritten benefit-led bullets for a cleaner client-facing comparison."
                 )
-
-                styled_diff = f"""
-                <style>
-                    .diff td {{ font-size: 12px; padding: 3px 6px; }}
-                    .diff_header {{ background: #e9ecef; }}
-                    td.diff_add {{ background: #d4edda; }}
-                    td.diff_chg {{ background: #fff3cd; }}
-                    td.diff_sub {{ background: #f8d7da; }}
-                </style>
-                {diff_html}
-                """
-                components.html(styled_diff, height=350, scrolling=True)
 
             st.divider()
             st.subheader("1-Click Cold Email")
