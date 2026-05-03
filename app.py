@@ -32,6 +32,35 @@ html, body, [class*="css"] {
     font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+@keyframes softReveal {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+        filter: blur(3px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes glowSweep {
+    0% { transform: translateX(-120%) rotate(12deg); opacity: 0; }
+    28% { opacity: 0.75; }
+    62% { opacity: 0.2; }
+    100% { transform: translateX(130%) rotate(12deg); opacity: 0; }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 24px 70px rgba(0,0,0,0.28), 0 0 0 rgba(255, 69, 0, 0);
+    }
+    50% {
+        box-shadow: 0 28px 90px rgba(0,0,0,0.36), 0 0 42px rgba(255, 69, 0, 0.18);
+    }
+}
+
 html, body, .stApp {
     max-width: 100%;
     overflow-x: hidden;
@@ -40,12 +69,14 @@ html, body, .stApp {
 .block-container {
     max-width: 100%;
     overflow-x: hidden;
+    animation: softReveal 520ms ease-out both;
 }
 
 .stApp {
     background:
-        radial-gradient(circle at 12% 8%, rgba(255, 69, 0, 0.20), transparent 28%),
-        radial-gradient(circle at 90% 16%, rgba(40, 167, 69, 0.14), transparent 26%),
+        radial-gradient(circle at 12% 8%, rgba(255, 69, 0, 0.22), transparent 30%),
+        radial-gradient(circle at 88% 18%, rgba(40, 167, 69, 0.16), transparent 27%),
+        radial-gradient(circle at 56% 92%, rgba(255, 177, 153, 0.08), transparent 24%),
         linear-gradient(135deg, #101018 0%, #171720 45%, #11151c 100%);
     color: #f7f7f8;
 }
@@ -59,6 +90,7 @@ html, body, .stApp {
 [data-testid="stSidebar"] {
     background: rgba(18, 18, 28, 0.96);
     border-right: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 20px 0 60px rgba(0,0,0,0.24);
 }
 
 [data-testid="stHeader"] {
@@ -70,6 +102,8 @@ h1, h2, h3 {
 }
 
 .hero-shell {
+    position: relative;
+    isolation: isolate;
     padding: 30px 34px;
     border: 1px solid rgba(255,255,255,0.10);
     border-radius: 8px;
@@ -77,6 +111,31 @@ h1, h2, h3 {
         linear-gradient(135deg, rgba(255,69,0,0.22), rgba(40,167,69,0.08)),
         rgba(255,255,255,0.055);
     box-shadow: 0 24px 70px rgba(0,0,0,0.28);
+    overflow: hidden;
+    animation: softReveal 620ms ease-out both, pulseGlow 5.5s ease-in-out infinite;
+}
+
+.hero-shell::before {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    z-index: -1;
+    background:
+        linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
+    animation: glowSweep 6.5s ease-in-out infinite;
+}
+
+.hero-shell::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    z-index: -2;
+    border-radius: 8px;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: linear-gradient(135deg, rgba(0,0,0,0.75), transparent 72%);
 }
 
 .hero-kicker {
@@ -105,8 +164,18 @@ h1, h2, h3 {
     padding: 16px;
     border-radius: 8px;
     border: 1px solid rgba(255,255,255,0.11);
-    background: rgba(255,255,255,0.065);
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.085), rgba(255,255,255,0.045)),
+        rgba(255,255,255,0.065);
     box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    animation: softReveal 520ms ease-out both;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 177, 153, 0.34);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.28);
 }
 
 .product-card img {
@@ -116,6 +185,11 @@ h1, h2, h3 {
     background: #ffffff;
     border-radius: 8px;
     padding: 8px;
+    transition: transform 220ms ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.025);
 }
 
 .product-name {
@@ -133,10 +207,19 @@ h1, h2, h3 {
 }
 
 .stMetric {
-    background: rgba(255,255,255,0.075);
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.095), rgba(255,255,255,0.055)),
+        rgba(255,255,255,0.075);
     border: 1px solid rgba(255,255,255,0.10);
     border-radius: 8px;
     padding: 14px 16px;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.16);
+    transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.stMetric:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.22);
 }
 
 [data-testid="stMetricLabel"] {
@@ -152,10 +235,18 @@ h1, h2, h3 {
     border: 1px solid rgba(255,255,255,0.10);
     border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
 }
 
 .streamlit-expanderHeader {
     font-weight: 800;
+}
+
+[data-testid="stExpander"] {
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.045);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.16);
 }
 
 .metric-card {
@@ -174,12 +265,27 @@ h1, h2, h3 {
 .score-ok  { color: #ffc107; font-weight: bold; }
 .score-good{ color: #28a745; font-weight: bold; }
 .stDownloadButton button, .stButton button {
+    position: relative;
     border-radius: 8px;
     font-weight: 800;
     border: 1px solid rgba(255,255,255,0.16);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    overflow: hidden;
+}
+
+.stDownloadButton button:hover, .stButton button:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.32);
+    box-shadow: 0 18px 42px rgba(0,0,0,0.26);
+}
+
+.stDownloadButton button:active, .stButton button:active {
+    transform: translateY(0);
 }
 
 .wow-panel {
+    position: relative;
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.14);
     background:
@@ -189,6 +295,17 @@ h1, h2, h3 {
     padding: 22px;
     margin: 8px 0 22px;
     overflow: hidden;
+    animation: softReveal 560ms ease-out both;
+}
+
+.wow-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.08) 42%, transparent 58%);
+    transform: translateX(-100%);
+    animation: glowSweep 7.5s ease-in-out infinite;
 }
 
 .lead-panel {
@@ -227,6 +344,7 @@ h1, h2, h3 {
     background: #ffffff;
     border-radius: 8px;
     padding: 12px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05), 0 16px 34px rgba(0,0,0,0.18);
 }
 
 .insight-strip {
@@ -241,6 +359,12 @@ h1, h2, h3 {
     border: 1px solid rgba(255,255,255,0.12);
     background: rgba(255,255,255,0.075);
     padding: 12px;
+    transition: transform 160ms ease, background 160ms ease;
+}
+
+.insight-pill:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.105);
 }
 
 .insight-label {
@@ -268,8 +392,20 @@ h1, h2, h3 {
     min-height: 132px;
     border-radius: 8px;
     border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.07);
+    background:
+        linear-gradient(150deg, rgba(255,255,255,0.095), rgba(255,255,255,0.045)),
+        rgba(255,255,255,0.07);
     padding: 15px;
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    animation: softReveal 620ms ease-out both;
+}
+
+.asset-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(87, 213, 111, 0.30);
+    background:
+        linear-gradient(150deg, rgba(40,167,69,0.14), rgba(255,255,255,0.055)),
+        rgba(255,255,255,0.075);
 }
 
 .asset-card-title {
@@ -293,6 +429,30 @@ h1, h2, h3 {
     padding: 16px;
     min-height: 240px;
     overflow: hidden;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+    transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.clean-diff-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,0.22);
+}
+
+[data-testid="stSidebar"] [data-baseweb="slider"] > div {
+    filter: drop-shadow(0 0 10px rgba(255, 69, 0, 0.24));
+}
+
+[data-testid="stNumberInput"] input,
+[data-testid="stTextInput"] input {
+    border-radius: 8px;
+    border-color: rgba(255,255,255,0.12);
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+[data-testid="stNumberInput"] input:focus,
+[data-testid="stTextInput"] input:focus {
+    border-color: rgba(255, 69, 0, 0.72);
+    box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.18);
 }
 
 .clean-diff-title {
@@ -335,6 +495,15 @@ h1, h2, h3 {
     .hero-title { font-size: 36px; }
     .insight-strip { grid-template-columns: 1fr; }
     .lead-panel { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 </style>
 """,
