@@ -48,7 +48,7 @@ def scrape_amazon_search(keyword, num_results=20):
         print(f"Search scrape failed: {e}")
         return []
 
-    soup = BeautifulSoup(response.text, "lxml")
+    soup = BeautifulSoup(response.text, "html.parser")
     products = []
 
     result_items = soup.select('[data-component-type="s-search-result"]')
@@ -121,7 +121,7 @@ def scrape_product_page(asin):
         print(f"Product page scrape failed for {asin}: {e}")
         return {}
 
-    soup = BeautifulSoup(response.text, "lxml")
+    soup = BeautifulSoup(response.text, "html.parser")
     result = {}
 
     bullets = []
